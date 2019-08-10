@@ -1,0 +1,518 @@
+syntax = "proto2";
+option java_package = "com.mzm.core.protobuf";
+option java_outer_classname = "CoreProtocol";
+
+import "CmdProtocol.proto";
+import "GameProtocol.proto";
+
+//协议包，内部可包含多条协议内容
+message MessagePack {
+	
+	required Cmd cmd = 1;
+  	optional int32 result = 2;				//0正常 ,大于0 错误编码
+  	optional string message= 3;				//错误信息
+  	optional string seed = 4[default=""];
+	optional string verificationcode = 5[default=""];
+	
+	//101503-房间信息 1-火凤凰 2-大白鲨 3-大字报 4-att 5-金皇冠
+	optional int32 typeOne = 6;
+	optional int32 typeTwo = 7;
+	optional int64 accountId = 8;
+	optional int32 typeThree = 9;
+  	optional CSRegsiter csRegister   = 20;	//普通注册
+	optional SCRegister scRegister   = 21;
+	optional CSLogin  csLogin        = 22;	//普通登陆
+	optional SCLogin  scLogin        = 23;
+
+	optional CSGuestLogin csGuestLogin       = 24;//游客登陆
+	optional SCGuestLogin scGuestLogin       = 25;
+	optional SCPic scPic             = 27;//修改头像
+
+	optional CCBinding ccBinding     		 = 28;//绑定账号
+
+	optional CSLoginOut csLoginOut 			 =29;//退出
+	optional SCLoginOut scLoginOut 			 =30;//退出
+
+	optional SCHeart scHeart 				 = 31;//心跳
+
+	optional CSPasswordUpdate csPasswordUpdate = 32;//更改密码
+	optional CSPasswordForget csPasswordForget = 33;//忘记密码
+	
+	optional SCSmsNum scSmsNum = 34;//短信验证码
+	optional CSSmsNum csSmsNum = 35;
+
+	optional SCNotice scNotice     = 38;//公告
+
+	optional CSOpenSecret csOpenSecret =39;//开启保险箱
+	optional SCOpenSecret scOpenSecret =40;
+
+	optional CSPlayerCoinScore csPlayerCoinScore =41;//玩家分数信息
+	optional SCPlayerCoinScore scPlayerCoinScore =42;
+
+	optional CSMachineListLeave csMachineListLeave =43;//离开机台大厅
+	optional SCMachineListLeave scMachineListLeave =44;
+
+	optional SCExchangeList scExchangeList = 46;
+	
+	optional SCExchangeRecord scExchangeRecord = 48;
+	
+	optional CSExchangeItem csExchangeItem = 49;//兑换物品
+	optional SCExchangeItem scExchangeItem = 50;
+	
+	optional CSRechargeItem csRechargeItem = 51;//充值物品
+	optional SCRechargeItem scRechargeItem = 52;
+	
+	optional CSCards csCards       = 56;//牌型
+
+	optional SCCards scCards       = 61;
+	
+	optional CSCardStar97 csCardStar97       = 66; //明星97牌型
+
+	optional SCCardStar97 scCardStar97       = 67; //明星97牌型
+
+	optional CSCompareCard csCompareCard   = 71;
+	
+	optional SCCompareCard scCompareCard   = 76;//比大小火凤凰
+
+	optional SCCompareHistoryCards scCompareHistoryCards = 78;//比倍历史牌型火凤凰
+
+	optional CSCompareHistoryOneCard csCompareHistoryOneCard = 86;
+
+	optional SCCompareHistoryOneCard SCCompareHistoryOneCard = 91;
+
+	optional CSFourKindTime csFourKindTime = 93;
+
+	optional SCFourKindTime scFourKindTime = 94;//获取正宗大四梅随机倍数
+	
+	optional CSMachineAuto csMachineAuto = 98;
+
+	optional SCMachineAuto scMachineAuto = 103;
+
+	optional CSPlayerCardsData csPlayerCardsData       = 105;//查询游戏记录
+
+	optional CSBigRank csBigRank =113;
+	
+	optional SCBigRank scBigRank =118;
+	
+	optional CSWinRecord csWinRecord = 123;
+
+	optional SCWinRecord scWinRecord = 128;
+	
+	optional CSEnterMachine csEnterMachine = 130;//选择机台
+	optional SCEnterMachine scEnterMachine = 131;
+
+	optional CSLeaveMachine csLeaveMachine           	 = 135;//离开机台
+	optional SCLeaveMachine scLeaveMachine           	 = 136;//离开机台
+
+	optional CSReservationAuto csReservationAuto= 140;//留机
+	optional SCReservationAuto scReservationAuto= 141;//留机
+
+	optional SCRoomInfoList scRoomInfoList = 161;  // 房间列表
+
+	// optional RoomDetailInfo roomDetailInfo = 162;  // 房间详情信息
+
+	optional SCMachineInfoList scMachineInfoList = 163;  // 机台列表
+
+	optional MachineDetailInfo machineDetailInfo         = 164;//机台详情信息
+
+	optional SCPlayerHistoryData scPlayerHistoryData = 166;//历史牌型
+
+	optional SCGameRankList scGameRankList = 171; // 排行榜返回
+
+	optional SCAccountInfoRight scAccountInfoRight = 172; // 个人信息右
+	optional SCScoreCoin scScoreCoin = 173; // 个人信息左
+
+	optional CSMail csMail = 174; // 邮件
+	optional SCMail scMail = 175; // 邮件返回
+	optional CSMailAward csMailAward = 176; // 邮件领奖
+	optional SCMailAward scMailAward = 177; // 邮件领奖返回
+
+	optional CSReadMail csReadMail = 178; // 阅读邮件
+	optional SCReadMail scReadMail = 179; // 阅读返回
+
+	optional SCFirstRecharge scFirstRecharge = 180;//首充
+	optional SCMonthCard scMonthCard = 181; // 返回
+
+	optional SCSign scSign = 183; // 签到
+
+	optional CSBindInviteCode csBindInviteCode = 184; // 绑定邀请码
+	optional SCBindInviteCode scBindInviteCode = 185; // 返回
+	
+	optional SCBigRankList scBigRankList =188;
+
+	optional CSPic csPic = 191;//修改头像
+
+	optional CSWin csWin = 197;//得分
+	
+	optional SCWin scWin = 198;//得分
+
+	optional CSCompareBet csCompareBet = 193;//比倍半比平比双比火凤凰
+	optional SCCompareBet scCompareBet = 194;
+	
+	optional CSDropMail csDropMail = 195; // 删除邮件
+	optional SCDropMail scDropMail = 196; // 删除返回
+
+	optional CSChangeMachine csChangeMachine = 199;//转台
+	optional SCChangeMachine scChangeMachine = 200;
+	optional CSCoinScore csCoinScore = 201;//取分存分
+	optional SCCoinScore scCoinScore = 202;//取分存分
+	
+	optional CSRoom csRoom = 203;//房间buf
+	optional SCRoom scRoom = 204;//房间buf
+	
+	optional SCScoreGuest scScoreGuest = 206;//领取体验分
+	
+	optional CSNickName csNickName = 207;//修改玩家昵称
+	optional SCNickName scNickName = 208;//修改玩家昵称
+	
+	optional CSTYHappiness csTYHappiness = 233;//体验场喜从天降
+	optional SCTYHappiness scTYHappiness = 234;
+	
+	optional SCRechangeCoin scRechangeCoin = 235;//推送上钻钻石数
+	optional CSTYHappinessPickOne csTYHappinessPickOne = 236;//体验场喜从天降选择福袋
+	optional SCTYHappinessPickOne scTYHappinessPickOne = 237;
+	
+	optional SCSystemNoticeList scSystemNoticeList = 238;//系统公告十条
+	
+	optional CSDelayNotice csDelayNotice=239;//延缓公告
+	
+	optional CSAddPlayerSuggestionFeedback csAddPlayerSuggestionFeedback=240;//延缓公告
+	optional SCAddPlayerSuggestionFeedback scAddPlayerSuggestionFeedback = 241;//系统公告十条
+	
+	optional CSAddBuyCard csAddBuyCard = 242;//加买
+	optional SCAddBuyCard scAddBuyCard = 243;
+	
+	optional CSPaman csPaman = 244;//玩牌
+	optional SCPaman scPaman = 245;
+	optional CSBaiscConfiguration csBaiscConfiguration = 246;//基本配置
+	optional SCBaiscConfiguration scBaiscConfiguration = 247;//基本配置
+	optional CSPamanRateAwardAlgorithm csPamanRateAwardAlgorithm = 248;//Paman奖型倍率算法
+	optional SCPamanRateAwardAlgorithm scPamanRateAwardAlgorithm = 249;//Paman奖型倍率算法
+	
+	optional SCCPayMenu scCPayMenu = 251;//cpay转出
+	optional CSCPayWithDraw csCPayWithDraw = 252;//cpay转出
+	optional SCCPayRecord scCPayRecord = 253;//cpay记录
+	
+	optional CSCPayBankCard csCPayBankCard = 254;//绑定银行卡
+	optional SCCPayBankCard scCPayBankCard = 255;
+	
+	repeated SCCQMenu scCQMenu = 256;//cq支付列表
+	repeated SCCQRecord scCQRecord = 257;//cq充值记录
+	
+	optional CSCQSubmit csCQSubmit = 258;//cq人工提交支付订单
+	
+	optional CSFGLunchGame csFGLunchGame = 259;//FG启动游戏
+	optional SCFGLunchGame scFGLunchGame = 260;
+}
+
+message CSTYHappinessPickOne {
+	required int32 index = 1;//选择福袋
+}
+
+message SCTYHappinessPickOne {
+	required string happiness= 1;//福袋列表
+}
+
+message CSTYHappiness {
+	required int32 gameType = 1;//游戏类型1-火凤凰
+	required string seoMachineId = 2;//机台号
+}
+
+message SCTYHappiness {
+	optional int32 gameType = 1;//游戏类型1-火凤凰
+	optional string seoMachineId = 2;//机台号
+	optional int32 winDiamond = 3;//体验场送钻石数
+	optional int64 seoMachinePlayCount = 4; //机台或者老玩家所玩局数
+	optional int32 winDiamondType = 5;//红包来袭赢钻类型
+}
+
+message CSExchangeItem {
+	required int32 id = 1;//id
+}
+	
+message SCExchangeItem {
+	required int32 id = 1;//id
+	required int32 left = 2;//剩余库存
+}
+
+message CSRechargeItem {
+	required int32 id = 1;//id
+}
+	
+message SCRechargeItem {
+	required int32 id = 1;//id
+}
+	
+message SCExchangeRecord {
+	repeated SCExchangeRecordValue value = 1;
+}
+	
+message SCExchangeRecordValue {
+	required string date = 1;//日期
+	required int32 id = 2;//兑换id
+	required int32 quantity = 3;//购买数量
+}
+	
+message SCExchangeList {
+	repeated SCExchangeListItem item = 1;
+}
+
+message SCExchangeListItem {
+	required int32 id = 1;//id
+	required int32 left = 2;//剩余库存
+}
+
+message CSMachineListLeave {
+	optional int32 gameType = 1;
+}
+
+message SCMachineListLeave {
+	optional int32 gameType = 1;
+}
+
+message CSPlayerCoinScore {
+	required int64 accountId = 1;//玩家id
+	required string machineId = 2;//机台id
+}
+
+message SCPlayerCoinScore {
+	required int32 score = 1;//分数
+	required int32 coin = 2;//金币
+}
+
+message CSOpenSecret{
+	required int32 open =1;
+}
+
+message SCOpenSecret{
+	required int32 open =1;
+}
+
+message SCNotice{
+	required int32 id = 1;//消息类型
+	optional string sigment1 = 2;
+	optional string sigment2 = 3;
+	optional string sigment3 = 4;
+	optional string sigment4 = 5;
+	optional string sigment5 = 6;
+	optional string sigment6 = 7;
+	optional string sigment7 = 8;
+	optional string sigment8 = 9;
+	optional string sigment9 = 10;
+	optional string sigment10 = 11;
+	optional string sigment11 = 12;
+	optional string sigment12 = 13;
+	optional string sigment13 = 14;
+	optional string sigment14 = 15;
+	optional string sigment15 = 16;
+	optional string sigment16 = 17;
+	optional string sigment17 = 18;
+	optional string sigment18 = 19;
+	optional string sigment19 = 20;
+	optional string sigment20 = 21;
+	required int32 priority = 22;
+}
+
+message CSRegsiter {
+	required string account = 1;//账号
+	required string password = 2;//密码
+	required string seoid= 3;//推广码
+	optional int32 smsNum = 4;//短信验证码
+	required string udId = 5;//设备唯一标识
+	optional string phoneNum = 6;//手机号
+}
+
+message CSLoginOut {
+	required int64 accountId = 1;//退出帐号
+}
+
+message SCLoginOut {
+	optional int64 accountId = 1;//退出帐号
+}
+
+message SCRegister {
+	required string account = 1;//玩家账号
+}
+
+message CSLogin{
+	required string account = 1;//玩家账号
+	required string password = 2;//密码
+	required string udid = 3;
+}
+
+message SCLogin{
+	required string pic = 1;//头像
+	required string nickname = 2;//昵称
+	required int32 score = 3;//分数
+	optional int32 coin = 4;//金币
+	required int32 nickNameCount = 5;//修改昵称次数
+	required string seoid = 6;//代理商
+	//required int32 forceNickName = 7;//强制修改昵称
+	required int32 guest=8;//体验分领取状态: 已领取-1 未领取-0
+	required int32 scoreGuest=9;//体验分
+	optional string offlineMachineId=10;//强退的机台号
+	optional int32 guide=11;//新手教程
+	
+	optional string phoneNumber = 12;//手机号码
+	required bool isFirstRecharge = 13;//true不可以首充false可以首充
+	required int64 monthCardTime = 14; // 月卡剩余时间0-没有充值
+	required int32 signCount = 15; // 签到次数
+	repeated GameInfo gameInfo = 16; // 游戏列表信息
+	optional int32 hasUnReadedMail = 17; // 是否有未读邮件 0--有未读 1--没有未读
+	optional int64 accountId = 18; // 帐号ID
+	optional string inviteCode = 19; // 邀请码
+	required bool signShow = 20;//true-可签到不已领取   false-不可签到已领取
+	
+	repeated MenuList menuList =21;//主界面菜单列表
+	
+	optional string reservationMachineId = 22;//留机机台版号
+	optional string offlineRoomId = 23;//强退机台的房间类型
+	optional int32 offlineGameId = 24;//强退机台的游戏类型
+	
+	optional int32 firstRechargeCost = 25;//首充售价
+	optional string firstRechargeReward = 26;//首充钻石
+	
+	required int32 monthCost = 27;//月卡价格
+	required string monthRewardTotal =28;//月卡总奖励
+	required string monthGiveReward = 29;//立即给的月卡奖励
+	required int32 isDayFirstLogin = 30;//是否每日首次登陆  0-是 1-不是
+	repeated int32 tyDiamondGameList = 31; // 开启体验场活动的游戏名称
+	repeated ActivityInfo activityInfoList = 32; // 游戏活动信息
+	optional int32 happinessMaxDiamond = 33; // 喜从天降最大送钻数
+} 
+
+// 活动信息
+message ActivityInfo{
+	required int32 gameNumber = 1; // 游戏号
+	optional int32 roomNumber = 2; // 房间号
+	optional int32 maxGiftDiamond = 3; // 最大送钻数
+	optional int32 maxGiftScore = 4; // 最大送分数 
+	optional string others = 5; // 其他内容
+}
+
+// 游戏信息
+message GameInfo{
+	optional int32 gameNumber = 1; // 游戏序号
+	optional string gameName = 2; // 游戏名称
+	optional string gameVersion = 3; // 游戏版本
+	optional string gameJson = 4; // 热更新文件 
+	optional int32 gameSwitch = 5; // 游戏开关0-开启1-关闭
+	optional string gameFunGameInfo = 6; // FG游戏信息
+}
+
+message MenuList{
+	required int32 menu_id = 1;//菜单编号
+	required int32 pos_id = 2 ;//菜单位置编号
+}
+
+//游客登录
+message CSGuestLogin{
+	optional string account = 1;//玩家账号
+}
+
+message SCGuestLogin{
+	required string account = 1;//玩家账号
+	required int32 pic = 2;//头像
+	required string nickname = 3;//昵称
+	required int32 score = 4;//分数
+	required int32 nickNameCount = 5;//修改昵称次数
+}
+
+message CSCoinScore{
+	required int32 score = 1;//分数
+	required int32 coin = 2;//金币
+}
+
+message SCCoinScore{
+	required int32 score = 1;//分数
+	required int32 coin = 2;//金币
+}
+
+message CSBigRank {
+	optional int32 bigRank = 1;
+}
+
+message SCBigRank {
+	required string pic = 1;//头像
+	required string nickname = 2;//昵称
+	required string machineId = 3;//机台
+	required int32 winType = 4;//奖项
+	optional int32 addtionalWinType = 5;//翻倍倍数
+	required int32 score = 6;//分数
+	required int32 level = 7;//200,500,1000
+}
+
+message SCBigRankList {
+		repeated  SCBigRank scBigRank = 1;//排名信息
+}
+
+message CSNickName{
+	required string nickName = 1;//昵称 result=0 成功
+	optional int32 nickNameCount = 2;//修改昵称次数
+}
+
+message SCNickName{
+	required string nickName = 1;//昵称 result=0 成功
+	optional int32 nickNameCount = 2;//修改昵称次数
+}
+
+message CSPic{
+	required string pic = 1;//头像 1-6
+}
+
+message SCPic{
+	required string pic = 1;//头像 result=0 成功
+}
+
+message CCBinding {
+	required string phoneNumber = 1;//手机号
+	required int32 smsNum = 2;//短信验证码
+}
+
+message CSPasswordUpdate {
+	required string account = 1;//账号
+	optional string oldPassword = 2;//老密码
+	required string newPassword = 3;//新密码
+	optional int32 smsNum = 4;//验证码
+}
+
+message CSPasswordForget {
+	required int32 smsNum = 1;//短信验证码
+}
+
+message CSSmsNum {
+	required string smsNum = 1;//手机号
+	required int32 smsType = 2;//短信验证码类型 0-注册1-忘记密码 2-绑定手机号或者更改绑定
+}
+
+message SCSmsNum {
+	required int32 smsNum = 1;//短信验证码
+}
+
+message SCHeart{
+	required string currentTime = 1;//当前时间
+}
+
+message CSDelayNotice{
+   optional int32 statue=1;//状态
+}
+ 
+ 
+ //玩家反馈插入
+message CSAddPlayerSuggestionFeedback{
+	required string suggestionFeedback = 1;//意见建议反馈
+}
+ //玩家反馈插入
+message SCAddPlayerSuggestionFeedback{
+   optional string result=1;//插入结果
+}
+
+//通用配置
+message CSBaiscConfiguration{
+	required int32 settingType = 1;//配置类型:1:paman基本配置; 后续添加
+}
+//通用配置
+message SCBaiscConfiguration{
+    required int32 settingType = 1;//配置类型:1:paman基本配置; 后续添加
+	required string baiscConfiguration = 2;//基本配置
+}

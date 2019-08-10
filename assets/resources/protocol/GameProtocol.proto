@@ -1,0 +1,678 @@
+syntax = "proto2";
+option java_package = "com.mzm.core.protobuf";
+option java_outer_classname = "GameProtocol";
+
+message CSFGLunchGame {
+	optional int32 gameNumber = 1;//游戏id
+}
+
+message SCFGLunchGame {
+	optional string lunchGame = 1;//FG启动游戏返回参数
+}
+
+message CSCQSubmit {
+	optional string submit = 1;//类型,我的卡号/微信账号/支付宝账号, 名字,金额，id
+}
+
+message SCCQRecord {
+	optional string orderId = 1;//订单号
+	optional string coin = 2;//充值金额
+	optional int64 time = 3;//充值时间
+	optional int32 status = 4;//状态
+	optional int32 payMenuId = 5;
+	optional int32 payChannelId = 6;
+}
+
+message SCCQMenu {
+	optional int32 payMenuId = 1;
+	optional int32 payChannelId = 2;
+	optional int32 bankId = 3;//银行Id
+	optional string card = 4;//银行卡号/微信帐号/支付宝帐号
+	optional string userName = 5;//银行开户名/姓名
+	optional string bankName = 6;//开户行
+	optional string coin = 7;//金额 100,200,500
+	optional string payUrl = 8;//支付二维码
+	optional int32 id = 9;//id
+	optional int32 minMoney = 10;//下限
+	optional int32 maxMoney = 11;//上限
+	optional string cardName = 12;//账户别名
+	optional int32 priorityMinMoney = 13;//优先下限
+	optional int32 priorityMaxMoney = 14;//优先上限
+}
+
+message CSCPayBankCard {
+	optional string bankCard = 1;// 卡号
+	optional string bankName = 2;// 银行名字
+	optional string name = 3;//名字 
+}
+
+message SCCPayBankCard {
+	required string backCard = 1;
+	optional string bankName = 2;// 银行名字
+	optional string name = 3;//名字 
+}
+
+message SCCPayMenu {
+	repeated SCCPayMenuValue scCPayMenuValue = 1;
+}
+
+message SCCPayMenuValue {
+	required int32 id = 1;
+	required int32 type = 2;//1-微信2-支付宝
+	required int32 coin = 3;
+	required string cost = 4;
+}
+
+message SCCPayRecord {
+	repeated SCCPayRecordValue scCPayRecordValue = 1;
+}
+
+message SCCPayRecordValue {
+	required int32 coin = 1;
+	required int64 time = 2;
+	required int32 status = 3;//1-处理中2-
+}
+
+message CSCPayWithDraw {
+	required int32 coin = 1;//转出钻石数量
+}
+
+message CSAddBuyCard {
+	required int32 buyCount = 1; // 0-不加买1-加买
+	//服务器用
+	repeated int32 firstHandCards = 2;//第一手牌牌型
+	repeated int32 secondHandCards = 3;//第二手牌牌型
+	optional string machineId = 4;
+	optional int32 thirdHandCard = 5;//1-普通 2-黄金 3-白金
+	optional int32 jokerCount = 6;//鬼个数
+	optional int32 random = 7;//0-累积1-随机2-房间
+	repeated int32 holdCards = 8 ;//保牌牌型
+	optional int64 accountId = 9;//玩家id
+	optional int32 betScore = 10;//押注分
+	optional int32 keepCard = 11;//大奖配置id
+	optional int32 winType2 = 12;//奖型2
+	optional string randomWinPoolData = 13;//顺子替换牌
+	optional int32 winType = 14;//奖型
+	repeated int32 serverHoldCards = 15;//服务器保牌牌型
+	optional int32 orignalRandom = 16;//1-纯随机
+}
+
+message SCAddBuyCard {
+	required int32 cardType = 1; // 加买牌类型（0-不加买1-普通 2-黄金 3-白金）
+	required int32 cardOneValue =2; //第一张加买牌
+	optional int32 cardTwoValue =3;//第二张加买牌
+	optional int32 cardThreeValue =4;//第三张加买牌
+	optional int32 cardOneWinType =5; //加买第一张牌后倍率
+	optional int32 cardTwoWinType =6;//加买第二张牌后倍率
+	optional int32 cardThreeWinType =7;//加买第三张牌后倍率
+	optional int32 cardOneWin =8; //加买第一张牌后分数
+	optional int32 cardTwoWin =9;//加买第二张牌后分数
+	optional int32 cardThreeWin =10;//加买第三张牌后分数
+	optional int32 cardTotalWin =11;//加买第三张牌后分数
+	optional int32 winWay =12;//出奖方式0-普通1-加买
+}
+
+
+message CSBindInviteCode {
+	required string inviteCode = 1; // 邀请码
+}
+
+message SCBindInviteCode {
+	required string result = 1; // 结果
+}
+
+message SCSign {
+	required int32 signCount = 1; // 签到次数
+	required bool signShow = 2;//true-可签到false-不可签到
+}
+
+message SCMonthCard {
+	required int64 monthCardTime = 1; // 月卡剩余时间
+}
+
+message SCFirstRecharge {
+	required bool isFirstRecharge = 1;//true不可以首充false可以首充
+}
+message CSReadMail {
+	required int64 id = 1; // 邮件ID
+}
+
+message SCReadMail {
+	required int64 id = 1; // 邮件ID
+}
+
+message CSMailAward {
+	required int64 id = 2; // 邮件ID
+}
+
+
+message SCMailAward {
+	required int64 id = 1; // 结果
+}
+
+message CSMail {
+}
+
+message SCMail {
+	repeated Mail mail = 1; // 邮件信息
+}
+
+message Mail {
+	
+	required int64 id = 1;//邮件的ID
+	required int32 dataEmailFormatId =2 ;//'排行榜-email：1.系统通知；2.排行榜；3.游戏奖励；4.月卡奖励；5.充值通知',
+	optional string sigment1 = 3;
+	optional string sigment2 = 4;
+	optional string sigment3 = 5;
+	optional string sigment4 = 6;
+	optional string sigment5 = 7;
+	optional string sigment6 = 8;
+	optional string sigment7 = 9;
+	optional string sigment8 = 10;
+	optional string sigment9 = 11;
+	optional string sigment10 = 12;
+	optional string sigment11 = 13;
+	optional string sigment12 = 14;
+	optional string sigment13 = 15;
+	optional string sigment14 = 16;
+	optional string sigment15 = 17;
+	optional string sigment16 = 18;
+	optional string sigment17 = 19;
+	optional string sigment18 = 20;
+	optional string sigment19 = 21;
+	optional string sigment20 = 22;
+	required string emailReward = 23;//'邮件奖励',
+	required int32 active = 24;//'是否可领取-1.可领取；2.不可领取',
+	required int32 read = 25;//'是否已读-1.已读；2.未读',
+	optional int64 readTime =26;//邮件读取时间
+	required int64 time = 27;//'时间戳',
+	
+}
+
+message CSDropMail {
+	required int64 id = 1;//邮件的ID
+}
+ 
+message SCDropMail {
+	required int64 id = 1;
+}
+
+message SCScoreCoin {
+	required int64 coin = 1; // 钻石
+	required int64 score = 2; // 正式分数
+	required int64 scoreGuest = 3; // 体验分数
+	required int64 historySumScore = 4; // 历史总赢分
+	required int64 maxSingleCardScore = 5; // 最高单独赢分
+}
+
+message SCAccountInfoRight {
+	repeated ListGameBestCardRecord listGameBestCardRecord = 1;//最佳牌型包
+}
+
+message ListGameBestCardRecord{
+    required int32 gameId = 1;//游戏类型
+    repeated GameBestCardRecord gameBestCardRecord = 2;//游戏最佳牌型
+	
+}
+
+message GameBestCardRecord {
+	required int32 gameType = 1; // 游戏类型
+	required string cardsInfo = 2; // 手牌
+	required string cardsTypeValue = 3; // 牌型分数
+	required string dateTime = 4; // 日期
+	required int32 order = 5;//顺序
+	required string machineId = 6;//场次
+}
+
+message SCGameRankList {
+	repeated GameRankInfo gameRankList = 1; // 前20名列表
+	repeated NewRankTypeInfo  newRankTypeInfo= 2; // Paman大奖榜
+ }
+
+message GameRankInfo {
+	required int32 rankNumber = 1; // 名次
+	required string pic = 2[default=""];//头像
+	required string nickname = 3[default=""]; // 昵称
+	required int64 score = 4; // 分数
+	optional string reward = 5[default=""]; // 奖励
+	optional int64 datetime = 6;//时间
+	optional string winType = 7;//获奖类型 游戏类型_奖型_倍率
+	optional string machineId = 8;//机台版号
+	optional int32 coin = 9;//外奖送分数
+	optional int32 winTypeRate = 10;//外奖送分倍数
+	optional int32 cardType = 11;//加买牌类型（0-不加买1-普通 2-黄金 3-白金）
+}
+
+//paman大奖榜新风格显示[paman]
+message NewRankTypeInfo {
+	required string machineId = 1; // 机台号
+	required string winTypeRankInfo = 2;//奖型列表
+}
+
+// 房间列表
+message SCRoomInfoList{
+   repeated string roomIds = 1;
+   repeated SCMachineInfoList scMachineInfoList = 2; // 机台列表
+}
+
+// 场次和该场次下的所有机台
+message SCMachineInfoList {
+   required string roomId = 1;                     // 单个场次
+   repeated MachineDetailInfo machineDetailInfo =2;// 机台详细信息
+   optional int32 isCanEnterRoom = 3; // 是否能获取场次里的机台  0-不能，1-能
+   optional int32 minEnterRoomDiamond = 4; // 房间
+   optional string todayNearestOpenTime = 5; // 今日喜从天降最近开放时间
+   optional int32 happinessMaxDiamond = 6; // 喜从天降最大送钻数量
+   optional string happinessDiamondList = 7; // 喜从天降钻石列表
+   optional string star97ActivityStartTime = 8; // 明星97活动开启时间
+   optional int32 star97ActivityLeftCount = 9; // 明星97活动剩余个数
+   optional int32 star97ActivityTotalCount = 10; // 明星97活动总数
+   optional int32 tyActivityLeftCount = 11; // 所有游戏选择体验场时，体验场上展示体验次数；格式如20/20;（前端展示）
+   optional int32 tyActivityTotalCount = 12; // 所有游戏选择体验场时，体验场上展示体验次数；格式如20/20;（前端展示）
+}
+
+message MachineDetailInfo{
+  required int32 type =2;//1-展示机台；2-修改机台；3-添加机台
+  required int64 autoid = 3;//机台id
+  required int32 seoid =4;//压住分
+  required string seoMachineId =5;//机台id
+  required int32 seoMachineType =6;//几台状态0-离线；1-在线；2-留机
+  optional string nick = 7;//昵称
+  optional string pic = 8;//头像
+  optional int64 reservationDate=9;//锁机时间倒计时：2017-2-28 15:00:00
+  optional int64 currentSysTime=10;//当前系统时间
+  optional int32 sex = 11;//性别
+  optional int64 accountId =12;//玩家id
+  optional int32 isForceExit =13;//是否强退留机 0-否 1-是
+  optional int32 maxBetScore =14;//最大押注分（att2浮动押分）
+}
+
+message CCEnterMachine{
+	optional int32 machineLevel = 1;//场次分数0-快速开始 其余对应场次分数
+	optional int32 fivek = 2;//五梅bonus
+	optional int32 rs = 3;//大顺bonus
+	optional int32 sf = 4;//小顺bonus
+	optional int32 fourk = 5;//四梅bonus
+	optional string machineId = 6;//机台id
+	optional int32 gameType = 7; // 游戏类型
+}
+
+message CSLeaveMachine {
+	required string machineId = 1;//机台id
+}
+
+message SCLeaveMachine {
+	required string machineId = 1;//机台id
+	required string id = 2;//场次id
+}
+
+message CCLeaveMachine {
+	required string machineId = 1;//机台id
+}
+
+message CSRoom {
+	optional string seoMachineId = 1;//机台号
+	optional int32 betScore =2 ;//下注分数 100,500,1000,2000
+}
+
+message SCRoom {
+	optional int64 accountId = 1;//房间buff选中玩家id
+	optional int32 roomWinType = 2;//房间buff奖型
+}
+
+
+message CSCards{
+	optional int32 betScore = 1;//押注分（att2用）
+	optional string holdCards = 2;//保牌牌型
+	//服务器用
+	optional string machineId = 3;//机台号
+	optional int32 startIndex = 4;//1-第一手 2-第二手 3-得分
+	optional string serverHoldCards = 5;//第一手保牌保牌牌型
+	optional int32 keepCard = 6;//大奖保牌winType
+	optional int32 winType2 = 7;//winType2
+	optional string serverCards = 8;//第一手保牌保牌牌型
+	optional string randomWinPoolData = 9;//第一手大奖牌型信息
+	optional int32 roomWinType = 10;//房间buf奖型
+	optional int32 random = 11;//0-累积1-随机
+	optional int32 straightFirstValue = 12;//顺子首张牌
+	optional int32 jokerCount = 13;//鬼牌数量
+	optional int32 newer = 14;//新人1-初级2-中级
+}
+
+message CSPaman {
+	optional int32 aaabbButton = 1;//葫芦幸运数 0-不幸运数1-幸运数
+	optional int32 playType = 2;//0-押注1-全开
+	//服务器用
+	optional string machineId = 3;//机台号
+	optional int64 fivepkPathId = 4;//上机记录id
+}
+
+message SCPaman {
+	optional int32 aaabb = 1;//葫芦幸运数 0-不幸运数1-幸运数
+	optional int32 playType = 2;//0-押注1-全开
+	optional int32 playCount = 3;//押注次数1234
+	optional int32 bonusRs = 4;//大顺彩金
+	optional int32 bonusFivek = 5;//五梅彩金
+	optional int32 bonusSf = 6;//小顺彩金
+	optional int32 bonusFourk = 7;//四梅彩金
+	optional string cards = 8;//牌
+	optional string cardsRed = 9;//红牌
+	optional int32 winType = 10;//奖型
+	optional int32 winTypeClient = 11;//奖型客户端
+	optional int32 winTypeJP = 12;//奖型JP
+	optional int32 winTypeAAABB = 13;//奖型aaabb 0-不是 10-是
+ }
+
+message SCCards{
+	required int32 cardRate =1 ;//中奖倍率
+	required string cards =2 ;//牌型
+	optional string holdCards =3 ;//保牌牌型
+	optional int32 realKind =4;//100-正宗大四梅
+	optional int32 preSound =5;//前兆音1-有
+	required int32 credit =6;//总赢分
+	required int32 betScore =7;//押注分
+	required int32 win =8;//赢分
+	required int32 startIndex = 9;//1-第一手 2-第二手 3-得分
+	//服务器用
+	optional int32 keepCard = 10; //大奖保牌winType
+	optional int32 winType2 = 11; //wintype2
+	
+	optional string compareHistoryCards = 13;//6张历史牌型
+	optional string randomWinPoolData = 14;//第一手大奖牌型信息
+	optional int64 seoMachinePlayCount = 15; //机台或者老玩家所玩局数
+	optional int32 coin = 16;//钻石
+	optional int32 random = 17;//0-累积1-随机
+	optional int32 roomWinType = 18;//房间buf奖型
+    optional int32 fivek = 19;//五梅bonus
+	optional int32 rs = 20;//大顺bonus
+	optional int32 sf = 21;//小顺bonus
+	optional int32 fourk = 22;//四梅bonus	
+	repeated SCCardsATT2Unit scCardsATT2Unit = 23;//大奖多个奖项
+	optional int32 randomPokerPoints = 24;//att高中低三档
+	optional int32 goldCrownTwoTimes = 25;//金皇冠两倍
+	optional int32 winBonus = 26; // att2赢的彩金分
+	optional int32 thirdHandCard = 27;//超级大亨2-黄金牌3-白金牌
+	optional int32 straightFirstValue = 28;//顺子首张牌
+	optional int32 jokerCount = 29;//鬼牌数量
+	optional string serverHoldCards = 30;//服务器保牌牌型
+	optional int32 orignalRandom = 31;//1-纯随机
+	optional int32 newer = 32;//新人1-初级2-中级
+}
+
+message SCCardsATT2Unit {
+	required int32 cardRate = 1 ;//中奖倍率
+	required int32 cardWin = 2 ;//中奖分数
+}
+
+message CSCardStar97{
+	required string machineId = 1;//机台号
+	required int32 betScore = 2;//押注分
+	optional int32 starRewardTime=3;//明星奖倍数
+	optional int32 starRewardLeftCount = 4;//明星奖剩余局数
+}
+
+message SCCardStar97{
+	required string elements = 1;//图形元素
+	required string lines = 2;//8条线成线结果
+	optional int32 starRewardTime = 3;//明星奖倍数
+	optional int32 starRewardLeftCount = 4;//明星奖剩余局数
+	required int32 credit = 5;//玩家当前分
+	required int32 winScore = 6;//本局总赢分
+	optional int32 giftScore = 7;//赢的彩金分
+	required int32 currentGiftScore = 8;//机台当前彩金分
+	optional int32 giftDiamond = 9;//外奖送钻数
+	optional int32 extraScore = 10;//外奖额外送分数
+	optional int32 activityTimes = 11;//外奖活动倍数
+	optional int32 noticeFlag = 12;//公告中奖类型标识
+	optional int32 random = 13;// 0:随机 1：机台奖池1 2：机台奖池2 3：房间奖池
+	required int32 seoMachinePlayCount = 14;// 机台总玩局数
+	required int32 coin = 15;// 玩家的总钻石
+}
+
+
+message CSCompareCard{
+	required int32 bigSmall =1 ;//0-大 1-小
+	//服务器用
+	optional string machineId = 2;//机台号
+	optional int32 betScore = 3;//押注分
+	optional int32 win = 4;//当前赢分
+	optional int32 winCount = 5;//比倍赢次数
+	optional string cards = 6;//五张牌型
+	optional int32 winType = 7;//奖型
+	optional int32 giftWin = 8;//彩金分
+	optional int32 five = 9;//是否是第一次五梅免费比倍0-是
+	optional int32 compareBet = 10;//1-半比2-平比3-双比
+	optional bool guoguanBonus = 11;//true-加过关彩金false-不加
+	optional bool baojiBonus = 12;//true-加暴击彩金false-不加
+	optional int32 bet = 13;//1-半比2-平比3-双比
+	optional int32 roomWinType = 14;//房间buff奖型
+	optional int32 winServer = 15;//比倍总玩分数
+}
+
+message SCCompareCard{
+	required int32 compareCard =1 ;//大小牌型2-A && 历史牌型
+	required int32 passBonus =2;//过关彩金
+	required int32 credit =3;//总赢分
+	required int32 win =4;//当前赢分
+	required int32 betScore =5;//押注分
+	required int32 startIndex = 6;//1-第一手 2-第二手 3-得分
+	required bool isWin = 7;//true-赢false-输
+	optional bool guoguanBonus = 15;//true-加过关彩金false-不加
+	optional bool baojiBonus = 16;//true-加暴击彩金false-不加
+	//服务器用
+	optional int32 giftWin = 9;//彩金分
+	optional int32 winCount = 10;//比倍赢次数
+	optional int32 prefabFiveOfAKindCompare = 11;//五梅免费1倍2倍
+	optional int32 bigSmall = 12 ;//0-大 1-小
+	optional string compareHistoryCards = 13;//6张历史牌型
+	optional int32 five = 14;//是否是第一次五梅免费比倍0-是
+	optional int32 bet = 17;//1-半比2-平比3-双比
+	optional int32 prefabCompareSevenJoker = 18;//2倍7 345倍鬼
+	optional int32 fiveBouns = 19;//暴击彩金
+	optional int32 winType = 20;//奖型
+	optional int32 winServer = 21;//比倍总玩分数
+	optional int32 passCheckGiftTimes = 22;//比倍过关次数
+	optional int32 passCheckGiftScore = 23;//比倍过关分数
+	optional int32 safeGiftScore = 24;//比倍保险彩金
+}
+
+
+message CSCompareHistoryOneCard{
+	required int32 compareCard =1 ;//默认0
+}
+
+message SCCompareHistoryOneCard{
+	required int32 compareCard =1 ;//大小牌型2-A && 历史牌型
+}
+
+message CSWinRecord {
+	optional int32 winRecord=1;
+}
+
+message SCWinRecord {
+	required string winRecordOne=1;
+	optional string winRecordTwo=2;
+	optional string winRecordThree=3;
+}
+
+message SCPlayerHistoryData{
+	repeated SCPlayerHistoryCardsData scPlayerHistoryCardsData = 1;
+}
+
+message SCPlayerHistoryCardsData{
+	required int32 credit = 1;//总玩分数
+	required int32 win = 2;//总赢分数
+	required int32 bet = 3;//下注分数
+	required string oneCard = 4;//第一手牌
+	optional string guardCard = 5;//保牌
+	optional string twoCard = 6;//第二手牌
+	repeated SCPlayerHistoryCompareData scPlayerHistoryCompareData = 7;
+	optional int32 winType = 8;
+	optional string addBuyCards = 9;//加买牌字符串拼接
+	optional int32 openCount = 10;//(paman显示牌使用标记)开几次牌 1--4次;全开是5
+	optional int32 plusCardsType = 11;// 加买牌类型（0-不加买1-普通 2-黄金 3-白金）
+ }
+
+message SCPlayerHistoryCompareData{
+	required int32 contrast = 1;//比倍模式1-半比2-平比3-双比
+	required int32 point = 2;//比倍押注
+	required int32 guess = 3;//猜大小1-大0-小
+	required int32 openCard = 4;//开牌
+}
+
+message CSPlayerCardsData{
+	optional int32 text =1;
+}
+
+message CSReservationAuto{
+	required string machineId = 1;//机台id
+    required int32 type =2;//留机的4个选项:1,2,3,4,5,6
+}
+
+
+message SCReservationAuto{
+    required string id=1;//房间id
+}
+
+
+message CSMachineAuto{
+	required int32 auto =1;//1-自动;0-手动
+}
+
+message SCMachineAuto{
+	required int32 auto =1;//1-自动;0-手动
+}
+
+message SCCompareHistoryCards {
+	required string cards = 1;//历史比倍牌型
+}
+
+
+
+message CSWin {
+	required int32 betScore =1;//押注分
+	required int32 win =2;//得分
+	required int32 giftWin =3;//彩金分
+	required int32 winGuoGuan =4;//过关彩金分
+	required int32 winGuoGuanCount =5;//过关次数
+	required string machineId =6;//机台号
+	optional int32 compareCard = 7;//历史比倍单张牌型
+	required int32 winType = 8;//奖型
+	optional int32 cardType = 9;//加买牌类型（0-不加买1-普通 2-黄金 3-白金）
+	optional int32 keepCard = 10; //大奖保牌winType	
+}
+
+message SCWin {
+	required int32 credit =1;//总赢分
+	required int32 betScore =2;//押注分
+	required int32 win =3;//赢分
+	required int32 startIndex = 4;//1-第一手 2-第二手 3-得分
+	//服务器用
+	required int32 serverBetScore =5;//押注分
+	required int32 serverWin =6;//得分
+	required int32 giftWin =7;//彩金分
+	required int32 winGuoGuan =8;//过关彩金分
+	required int32 winGuoGuanCount =9;//过关次数
+	required string machineId =10;//机台号
+}
+
+message CSCompareBet {
+	required int32 bet = 1;//1-半比2-平比3-双比
+	//服务器用
+	optional int32 win = 2;//赢分
+	optional string machineId = 3;//机台号
+	optional string cards = 4;//牌型
+	optional int32 winCount = 5;//比倍赢次数
+}
+
+message SCCompareBet {
+	required int32 credit =1;//总赢分
+	required int32 win =2;//赢分
+	required int32 card = 3;//得分翻牌牌型
+	required int32 bet = 4;//1-半比2-平比3-双比
+	optional int32 winCount = 5;//比倍赢次数
+}
+
+message CSEnterMachine{
+	optional string machineId = 1;//机台id
+	optional string machineBelongRoomId = 2;//机台所属房间ID 3_2这种
+	required int32 fastStart = 3;//快速开始 1快速开始，0正常选机台
+}
+
+message SCEnterMachine{
+	required int32 betScore = 1;//押注分数
+  	required string id = 2;//场次索引
+  	required string machineId =3;//機台id
+  	optional int32 compareMaxCount = 4; // 比倍上限次数
+  	required int32 gameId = 5 ; //游戏类型
+	required int32 currentGift=6;//进机台的时候彩金数
+	optional int32 fivek=7;
+	optional int32 rs=8;
+	optional int32 sf=9;
+	optional int32 fourk=10;
+	optional int32 lastBetScore=11;
+	optional int32 aaabb = 12;//葫芦幸运数
+}
+
+message CSFourKindTime {
+	optional int32 betScore = 1;//押注分
+	optional int32 winType2 = 2;//winType2
+	optional string machineId = 3;//机台号
+	optional int32 win = 4;//赢分
+	optional int32 roomWinType = 5;//房间buff奖型
+}
+
+message SCFourKindTime{
+	required int32 multiple =1;//返回倍数
+	required int32 credit =2;//总赢分
+	required int32 betScore =3;//押注分
+	required int32 win =4;//赢分
+	required int32 startIndex =5;//1-第一手 2-第二手 3-得分
+}
+
+message SCScoreGuest{
+	required int32 score = 1;//正式分
+	required int32 scoreGuest =2;//体验分
+}
+
+message CSChangeMachine{
+	required string enterMachineId = 1;//选定的机台
+}
+
+message SCChangeMachine{
+	required string machineId = 1;//选定的机台
+	required string id =2;
+	optional int32 currentGift=3;//转台后的彩金分
+	optional int32 fivek=4;
+	optional int32 rs=5;
+	optional int32 sf=6;
+	optional int32 fourk=7;
+	optional int32 lastBetScore=8;
+	optional int32 aaabb = 9;//葫芦幸运数
+}
+
+message SCRechangeCoin{
+	required int32 coin = 1;//钻石数
+}
+
+message SCSystemNoticeList{
+	repeated SystemNotie systemNotie = 1;//系统公告
+}
+
+message SystemNotie{
+	required int32 id = 1;
+	required string notice = 2;
+	required int64 time = 3; 
+}
+
+message CSPamanRateAwardAlgorithm{
+	required int32 requestType = 1;//选择比倍类型:[1:半比;2:双比;3:平比 ] ; 7:客户选择的必备大小请求
+	optional int32 luckyCardScope = 2;//客户端选择幸运牌范围-1:(1-7)小;1:(7-13)大
+}
+
+message SCPamanRateAwardAlgorithm{
+	required int32 requestType = 1;//选择比倍类型:[1:半比;2:双比;3:平比 ] ; 7:客户选择的必备大小请求
+	optional string luckyCardRecord = 2;//历史幸运牌记录
+	optional int32 playerOwnScore = 3;//自己身上的分数(受比倍类型影响)
+	optional int32 thisRoundScore = 4; //拿当前赢的奖型倍率分数(受比倍类型影响)
+}
